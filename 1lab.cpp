@@ -7,15 +7,17 @@ bool fillMatrixbyFile(double** matrix, int N, int M);
 void printMatrix(double** matrix, int N, int M);
 void Gauss(double** matrix, int N, int M);
 void SwapLines(int line1, int line2, double** a);
-
+void printAnswer(double** matrix, int N, int M); 
 int main()
-{
+{   
+    //Создаем матрицу
     system("chcp 1251");
     int N = 3, M = 4;
     double** matrix = new double* [N];
     for (int i = 0; i < N; i++) {
         matrix[i] = new double[M];
     }
+    //Заполняем ее с файла
     if (!fillMatrixbyFile(matrix, N, M)) {
         return -1;
     }
@@ -23,14 +25,14 @@ int main()
     printMatrix(matrix, N, M);
     cout << endl << endl;
     Gauss(matrix, N, M);
-
+    //Чистим память
     for (int i = 0; i < N; i++) {
         delete[] matrix[i];
     }
     delete[] matrix;
     return 0;
 }
-
+//Заполнение матрицы с файла
 bool fillMatrixbyFile(double** matrix, int N, int M)
 {
     ifstream inputFile("matrix.txt");
@@ -59,11 +61,14 @@ void printMatrix(double** matrix, int N, int M) {
 }
 
 void Gauss(double** matrix, int N, int M) {
+    //Делаем нули под диагональю
     for (int k = 0; k < N; k++) {
+        //koef - число на которое надо умножить к-ю строку чтобы разделить ее на на последующие с целью получения нулей 
         double koef = 0;
-        if (matrix[k][k] == 0) {
+        if (matrix[k][k] == 0) {//если опорный элемент равен нулю, то ищем строку, на которую можно поменять данную
             for (int i = k + 1; i < N; i++) {
                 if (matrix[i][k] != 0) {
+
                     SwapLines(k, i, matrix);
                     break;
                 }
@@ -77,7 +82,7 @@ void Gauss(double** matrix, int N, int M) {
             }
         }
     }
-
+    //Делаем нули выше диагонали
     for (int k = N - 1; k >= 0; k--) {
         double koef = 0;
         if (matrix[k][k] == 0) {
@@ -96,18 +101,22 @@ void Gauss(double** matrix, int N, int M) {
             }
         }
     }
-
+    //Делаем единицы на главной диагонали и получаем ответ
     for (int i = 0; i < N; i++) {
         double diagElement = matrix[i][i];
         for (int j = i; j < M; j++) {
             matrix[i][j] /= diagElement;
         }
     }
-
+    printAnswer(matrix, N, M);
     printMatrix(matrix, N, M);
 }
 
-
+void printAnswer(double** matrix, int N, int M) {
+    for (int i = 0; i < N; i++) {
+        cout << "x"<<i+1<<": " << matrix[i][M - 1]<< endl;
+    }
+}
 void SwapLines(int line1, int line2, double** a)
 {
     double* tmp = a[line1];
