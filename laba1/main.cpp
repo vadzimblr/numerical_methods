@@ -4,13 +4,14 @@
 #include <vector>
 using namespace std;
 
-bool fillMatrixbyFile(vector<vector<double>>& matrix, vector<double>& B);
+bool fillMatrixByFile(vector<vector<double>>& matrix, vector<double>& B);
 void printMatrix(const vector<vector<double>>& matrix);
-void Gauss(vector<vector<double>>& matrix, vector<double>& X);
-void SwapLines(int line1, int line2, vector<vector<double>>& a);
-double calculateRelativeError(vector<double>& X,vector<double>& new_X, vector<vector<double>>& copy_matrix, vector<double>& B, vector<double>& new_B);
-vector<double> getAnswer(const vector<vector<double>>& matrix ) ;
-vector<double> residuals(const vector<double> &X, const vector<double>& B,vector<double>& new_B,const vector<vector<double>>& copy_matrix);
+void gauss(vector<vector<double>>& matrix, vector<double>& X);
+void swapLines(int line1, int line2, vector<vector<double>>& a);
+double calculateRelativeError(vector<double>& X, vector<double>& newX, vector<vector<double>>& copyMatrix, vector<double>& B, vector<double>& newB);
+vector<double> getAnswer(const vector<vector<double>>& matrix);
+vector<double> residuals(const vector<double>& X, const vector<double>& B, vector<double>& newB, const vector<vector<double>>& copyMatrix);
+
 
 int main() {
     system("chcp 65001");
@@ -18,13 +19,13 @@ int main() {
     vector<vector<double>> copy_matrix;
     vector<double> X, B,new_X, new_B, residuals_vector;
     double RelativeError = 0;
-    if (!fillMatrixbyFile(matrix,B)) {
+    if (!fillMatrixByFile(matrix,B)) {
         return -1;
     }
     copy_matrix = matrix;
     printMatrix(matrix);
     cout << endl << endl;
-    Gauss(matrix,X);
+    gauss(matrix,X);
     residuals_vector = residuals(X,B,new_B,copy_matrix);
     RelativeError = calculateRelativeError(X,new_X,copy_matrix,B,new_B);
     cout << endl;
@@ -38,15 +39,15 @@ int main() {
     return 0;
 }
 
-double calculateRelativeError(vector<double>& X,vector<double>& new_X, vector<vector<double>>& copy_matrix, vector<double>& B, vector<double>& new_B){
-    for(int i = 0; i<new_B.size();i++){
-        copy_matrix[i][copy_matrix[0].size()-1]=new_B[i];
+double calculateRelativeError(vector<double>& X, vector<double>& newX, vector<vector<double>>& copyMatrix, vector<double>& B, vector<double>& newB){
+    for(int i = 0; i<newX.size();i++){
+        copyMatrix[i][copyMatrix[0].size()-1]=newX[i];
     }
-    Gauss(copy_matrix,new_X);
+    gauss(copyMatrix,newX);
     double max_difference,max_X = -10000;
     for(int i = 0; i<X.size();i++){
-        if(max_difference < abs(new_X[i]-X[i])) {
-            max_difference = abs(new_X[i] - X[i]);
+        if(max_difference < abs(newX[i]-X[i])) {
+            max_difference = abs(newX[i] - X[i]);
         }
         if(max_X < abs(X[i])){max_X = abs(X[i]);}
     }
@@ -54,20 +55,20 @@ double calculateRelativeError(vector<double>& X,vector<double>& new_X, vector<ve
 }
 
 
-vector<double> residuals(const vector<double> &X, const vector<double>& B, vector<double>& new_B,const vector<vector<double>>& copy_matrix){
+vector<double> residuals(const vector<double>& X, const vector<double>& B, vector<double>& newB, const vector<vector<double>>& copyMatrix){
     vector<double> residuals;
-    for(int i = 0; i<copy_matrix.size();i++){
+    for(int i = 0; i<copyMatrix.size();i++){
         double result = 0;
-        for(int j = 0; j<copy_matrix[i].size()-1;j++){
-           result += copy_matrix[i][j]*X[j];
+        for(int j = 0; j<copyMatrix[i].size()-1;j++){
+           result += copyMatrix[i][j]*X[j];
         }
-        new_B.push_back(result);
-        residuals.push_back(new_B[i]-B[i]);
+        newB.push_back(result);
+        residuals.push_back(newB[i]-B[i]);
     }
     return residuals;
 }
 
-bool fillMatrixbyFile(vector<vector<double>>& matrix, vector<double>& B) {
+bool fillMatrixByFile(vector<vector<double>>& matrix, vector<double>& B) {
     ifstream inputFile(R"(C:\Users\vadim\CLionProjects\numerical_methods\laba1\matrix.txt)");
     if (!inputFile.is_open()) {
         cerr << "Не удалось открыть файл!" << endl;
@@ -98,7 +99,7 @@ void printMatrix(const vector<vector<double>>& matrix) {
     }
 }
 
-void Gauss(vector<vector<double>>& matrix, vector<double>& X) {
+void gauss(vector<vector<double>>& matrix, vector<double>& X) {
     int N = matrix.size();
     int M = matrix[0].size();
 
@@ -108,7 +109,7 @@ void Gauss(vector<vector<double>>& matrix, vector<double>& X) {
         if (matrix[k][k] == 0) {
             for (int i = k + 1; i < N; i++) {
                 if (matrix[i][k] != 0) {
-                    SwapLines(k, i, matrix);
+                    swapLines(k, i, matrix);
                     break;
                 }
             }
@@ -146,6 +147,6 @@ vector<double> getAnswer(const vector<vector<double>>& matrix ) {
     return temp;
 }
 
-void SwapLines(int line1, int line2, vector<vector<double>>& a) {
+void swapLines(int line1, int line2, vector<vector<double>>& a) {
     swap(a[line1], a[line2]);
 }
