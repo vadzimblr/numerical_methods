@@ -91,7 +91,7 @@ bool fillMatrixbyFile(vector<vector<double>>& matrix, vector<double>& B) {
 
 void printMatrix(const vector<vector<double>>& matrix) {
     for (const auto& row : matrix) {
-        for (double val : row) {
+        for (const double& val : row) {
             cout << setw(15) << val;
         }
         cout << endl;
