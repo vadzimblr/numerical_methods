@@ -6,19 +6,19 @@ using namespace std;
 int main() {
     system("chcp 65001");
     vector<vector<double>> matrix;
-    vector<vector<double>> copy_matrix;
+    vector<vector<double>> copyMatrix;
     vector<double> X, B,newX, newB, residualsVector;
     double RelativeError = 0;
     if (!fillMatrixByFile(matrix,B)) {
         return -1;
     }
-    copy_matrix = matrix;
+    copyMatrix = matrix;
     printMatrix(matrix);
     cout << endl << endl;
     gauss(matrix,X);
     printAnswer(X);
-    residualsVector = residuals(X,B,newB,copy_matrix);
-    RelativeError = calculateRelativeError(X,newX,copy_matrix,B,newB);
+    residualsVector = residuals(X,B,newB,copyMatrix);
+    RelativeError = calculateRelativeError(X,newX,copyMatrix,B,newB);
     printAnswer(newX);
     cout << "Вектор невязки: " << endl;
     for(const double& elem: residualsVector){
