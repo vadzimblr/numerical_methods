@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 bool fillMatrixByFile(vector<vector<double>>& matrix, vector<double>& B);
@@ -31,7 +32,7 @@ int main() {
     cout << endl;
     cout << "Вектор невязки: " << endl;
     for(const double& elem: residuals_vector){
-        cout<<elem << " ";
+        cout << setprecision(200)<<elem << " ";
     }
     cout << endl;
     cout << "Норма вектора невязки: " << endl <<calculateResidualNorm(residuals_vector) << endl;
@@ -42,16 +43,17 @@ int main() {
 }
 
 double calculateRelativeError(vector<double>& X, vector<double>& newX, vector<vector<double>>& copyMatrix, vector<double>& B, vector<double>& newB){
-    for(int i = 0; i<newX.size();i++){
-        copyMatrix[i][copyMatrix[0].size()-1]=newX[i];
+    for(int i = 0; i<copyMatrix.size();i++){
+        copyMatrix[i][copyMatrix.size()]=newB[i];
     }
     gauss(copyMatrix,newX);
-    double max_difference,max_X = -10000;
-    for(int i = 0; i<X.size();i++){
-        if(max_difference < abs(newX[i]-X[i])) {
-            max_difference = abs(newX[i] - X[i]);
+    double max_difference = fabs(newX[0]-X[0]);
+    double max_X = fabs(X[0]);
+    for(int i = 1; i<X.size();i++){
+        if(max_difference < fabs(newX[i]-X[i])) {
+            max_difference = fabs(newX[i] - X[i]);
         }
-        if(max_X < abs(X[i])){max_X = abs(X[i]);}
+        if(max_X < fabs(X[i])){max_X = fabs(X[i]);}
     }
     return max_difference/max_X;
 }
@@ -65,6 +67,7 @@ vector<double> residuals(const vector<double>& X, const vector<double>& B, vecto
            result += copyMatrix[i][j]*X[j];
         }
         newB.push_back(result);
+
         residuals.push_back(newB[i]-B[i]);
     }
     return residuals;
@@ -103,7 +106,7 @@ bool fillMatrixByFile(vector<vector<double>>& matrix, vector<double>& B) {
 void printMatrix(const vector<vector<double>>& matrix) {
     for (const auto& row : matrix) {
         for (const double& val : row) {
-            cout << setw(15) << val;
+            cout <<setprecision(20) << setw(30) << val;
         }
         cout << endl;
     }
