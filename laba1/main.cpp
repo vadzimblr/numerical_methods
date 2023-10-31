@@ -11,7 +11,7 @@ void swapLines(int line1, int line2, vector<vector<double>>& a);
 double calculateRelativeError(vector<double>& X, vector<double>& newX, vector<vector<double>>& copyMatrix, vector<double>& B, vector<double>& newB);
 vector<double> getAnswer(const vector<vector<double>>& matrix);
 vector<double> residuals(const vector<double>& X, const vector<double>& B, vector<double>& newB, const vector<vector<double>>& copyMatrix);
-
+double calculateResidualNorm(const vector<double>& residuals);
 
 int main() {
     system("chcp 65001");
@@ -33,6 +33,8 @@ int main() {
     for(const double& elem: residuals_vector){
         cout<<elem << " ";
     }
+    cout << endl;
+    cout << "Норма вектора невязки: " << endl <<calculateResidualNorm(residuals_vector) << endl;
     cout << endl;
     cout << "Относительная погрешность: " <<endl;
     cout << RelativeError << endl;
@@ -67,9 +69,17 @@ vector<double> residuals(const vector<double>& X, const vector<double>& B, vecto
     }
     return residuals;
 }
-
+double calculateResidualNorm(const vector<double>& residuals){
+    double max = abs(residuals[0]);
+    for(int i = 1; i<residuals.size();i++){
+        if(max<abs(residuals[i])){
+            max = abs(residuals[i]);
+        }
+    }
+    return max;
+}
 bool fillMatrixByFile(vector<vector<double>>& matrix, vector<double>& B) {
-    ifstream inputFile(R"(C:\Users\vadim\CLionProjects\numerical_methods\laba1\matrix.txt)");
+    ifstream inputFile(R"(/Users/vadzim/Desktop/числаки/numerical_methods/laba1/matrix.txt)");
     if (!inputFile.is_open()) {
         cerr << "Не удалось открыть файл!" << endl;
         return false;
