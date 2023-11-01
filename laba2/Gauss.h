@@ -1,9 +1,11 @@
 #pragma once
-void gauss(double** matrix, int N, int M);
-void swapLines(int line1, int line2, double** a);
-void getAnswerGauss(double** matrix, int N, int M, double* B);
+#include <vector>
+using namespace std;
+void gauss(vector<vector<double>>& matrix, int N, int M);
+void swapLines(int line1, int line2, vector<vector<double>>& a);
+void getAnswerGauss(vector<vector<double>>& matrix, int N, int M, vector<double>& B);
 
-void gauss(double** matrix, int N, int M) {
+void gauss(vector<vector<double>>& matrix, int N, int M) {
     for (int k = 0; k < N - 1; k++) {
         double koef = 0;
         if (matrix[k][k] == 0) {
@@ -29,7 +31,7 @@ void gauss(double** matrix, int N, int M) {
     }
 }
 
-void getAnswerGauss(double** matrix, int N, int M, double* B) {
+void getAnswerGauss(vector<vector<double>>& matrix, int N, int M, vector<double>& B) {
     gauss(matrix, N, M);
     B[N - 1] = matrix[N - 1][M - 1];
     for (int i = N - 2; i > -1; i--) {
@@ -41,8 +43,8 @@ void getAnswerGauss(double** matrix, int N, int M, double* B) {
     }
 }
 
-void swapLines(int line1, int line2, double** a) {
-    double* tmp = a[line1];
+void swapLines(int line1, int line2, vector<vector<double>>& a) {
+    vector<double> tmp = a[line1];
     a[line1] = a[line2];
     a[line2] = tmp;
 }

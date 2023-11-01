@@ -12,8 +12,8 @@ double J1Dx01(const double& x01, const double& x02);
 double J1Dx02(const double& x01, const double& x02);
 double J2Dx01(const double& x01, const double& x02);
 double J2Dx02(const double& x01, const double& x02);
-void jakobianMethod1(double** matrix, const vector<double>& x);
-void jakobianMethod2(double** matrix, const vector<double>& x, const double& M);
+void jakobianMethod1(vector<vector<double>>& matrix, const vector<double>& x);
+void jakobianMethod2(vector<vector<double>>& matrix, const vector<double>& x, const double& M);
 
 int main() {
     //system("chcp 1251");
@@ -28,11 +28,8 @@ int main() {
     int N = 2;
     int M = 3;
     double MParametr = 0.1;
-    double** matrix = new double* [N];
-    for (int i = 0; i < N; i++) {
-        matrix[i] = new double[M];
-    }
-    double* ans = new double[N];
+    vector<vector<double>> matrix(N, vector<double>(M));
+    vector<double> ans(N);
 
     while ((d1 > eps || d2 > eps) && k < NIT) {
         jakobianMethod1(matrix, x);
@@ -45,7 +42,7 @@ int main() {
 
         d1 = getD1(x);
         d2 = getD2(x, xKplus1);
-        cout << "Итерация:" << k << " d1: " << d1 << " d2: " << d2 << endl;
+        cout << "Iteration:" << k << " d1: " << d1 << " d2: " << d2 << endl;
         k++;
         x = xKplus1;
     }
@@ -53,21 +50,16 @@ int main() {
     //261886462 0.01
     //261890459 0.05
     //261947396 0.1
-    cout << "Решение: x = " << setprecision(25) << x[0] << ", y = " << x[1] << endl << "Кол-во итераций: " << k << endl;
-    delete[] ans;
-    for (int i = 0; i < N; i++) {
-        delete[] matrix[i];
-    }
-    delete[] matrix;
+    cout << "Solution: x = " << setprecision(25) << x[0] << ", y = " << x[1] << endl << "Number of iterations: " << k << endl;
 }
 
 double getD1(const vector<double>& x) {
     double f1 = function1(x[0], x[1]);
     double f2 = function2(x[0], x[1]);
     if (abs(f1) > abs(f2))
-		return abs(f1);
-	else
-		return abs(f2);
+        return abs(f1);
+    else
+        return abs(f2);
 }
 
 double getD2(const vector<double>& x, const vector<double>& xKplus1) {
@@ -108,14 +100,14 @@ double J2Dx02(const double& x01, const double& x02) {
     return -9;
 }
 
-void jakobianMethod1(double** matrix, const vector<double>& x) {
+void jakobianMethod1(vector<vector<double>>& matrix, const vector<double>& x) {
     matrix[0][0] = J1Dx01(x[0], x[1]);
     matrix[0][1] = J1Dx02(x[0], x[1]);
     matrix[1][0] = J2Dx01(x[0], x[1]);
     matrix[1][1] = J2Dx02(x[0], x[1]);
 }
 
-void jakobianMethod2(double** matrix, const vector<double>& x, const double& M) {
+void jakobianMethod2(vector<vector<double>>& matrix, const vector<double>& x, const double& M) {
     matrix[0][0] = (function1(x[0] + M * x[0], x[1]) - function1(x[0], x[1])) / M * x[0];
     matrix[0][1] = (function1(x[0], x[1] + +M * x[1]) - function1(x[0], x[1])) / M * x[1];
     matrix[1][0] = (function2(x[0] + M * x[0], x[1]) - function2(x[0], x[1])) / M * x[0];
