@@ -6,10 +6,7 @@
 double getD1(const vector<double>& x) {
     double f1 = function1(x[0], x[1]);
     double f2 = function2(x[0], x[1]);
-    if (abs(f1) > abs(f2))
-        return abs(f1);
-    else
-        return abs(f2);
+    return (abs(f1)> abs(f2)? abs(f1): abs(f2));
 }
 
 double getD2(const vector<double>& x, const vector<double>& xKplus1) {
