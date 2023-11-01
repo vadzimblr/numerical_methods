@@ -56,7 +56,7 @@ void jakobianMethod1(vector<vector<double>>& matrix, const vector<double>& x) {
 
 void jakobianMethod2(vector<vector<double>>& matrix, const vector<double>& x, const double& M) {
     matrix[0][0] = (function1(x[0] + M * x[0], x[1]) - function1(x[0], x[1])) / M * x[0];
-    matrix[0][1] = (function1(x[0], x[1] + +M * x[1]) - function1(x[0], x[1])) / M * x[1];
+    matrix[0][1] = (function1(x[0], x[1] + M * x[1]) - function1(x[0], x[1])) / M * x[1];
     matrix[1][0] = (function2(x[0] + M * x[0], x[1]) - function2(x[0], x[1])) / M * x[0];
-    matrix[1][1] = (function2(x[0], x[1] + +M * x[1]) - function2(x[0], x[1])) / M * x[1];
+    matrix[1][1] = (function2(x[0], x[1] + M * x[1]) - function2(x[0], x[1])) / M * x[1];
 }
