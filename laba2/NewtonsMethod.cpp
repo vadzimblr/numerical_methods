@@ -40,7 +40,7 @@ double J1Dx02(const double& x01, const double& x02) {
 }
 
 double J2Dx01(const double& x01, const double& x02) {
-    return 3 * x01 * x01 * x01;
+    return 4 * x01 * x01 * x01;
 }
 
 double J2Dx02(const double& x01, const double& x02) {
