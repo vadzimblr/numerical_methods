@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Gauss.h"
+#include <cmath>
 using namespace std;
 double getD1(const vector<double>& x);
 double getD2(const vector<double>& x, const vector<double>& xKplus1);

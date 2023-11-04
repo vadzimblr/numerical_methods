@@ -22,7 +22,10 @@ int main() {
     vector<vector<double>> matrix(N, vector<double>(M));
     vector<double> ans(N);
 
-    while ((d1 > eps || d2 > eps) && k < NIT) {
+    while ((d1 > eps || d2 > eps)) {
+        if(k >= NIT){
+            cout << "IER=2" << endl;
+        }
         jakobianMethod1(matrix, x);
         //jakobianMethod2(matrix, x, MParametr);
         matrix[0][2] = -function1(x[0], x[1]);
