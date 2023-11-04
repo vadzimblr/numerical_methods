@@ -10,8 +10,8 @@ double getD1(const vector<double>& x) {
 }
 
 double getD2(const vector<double>& x, const vector<double>& xKplus1) {
-    double max = abs(xKplus1[0] - x[0]);
-    for (int i = 1; i < x.size(); i++) {
+    double max = 0;
+    for (int i = 0; i < x.size(); i++) {
         if (abs(xKplus1[i]) < 1) {
             if (abs(xKplus1[i] - x[i]) > max)
                 max = abs(xKplus1[i] - x[i]);
