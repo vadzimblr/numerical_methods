@@ -21,6 +21,7 @@ void compareNewtonMethod(const double& MParametr) {
     while ((d1 > eps || d2 > eps)) {
         if (k >= NIT) {
             cout << "IER=2" << endl;
+            break;
         }
         if (MParametr == 0.0) {
             jakobianMethod1(matrix, x);
