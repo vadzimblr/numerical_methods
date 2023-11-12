@@ -20,5 +20,6 @@ int main() {
     cout << setprecision(20) <<"I: " << calculateSimpsonIntegral(a,b,eps1,function) << endl;
     cout << "SimpsonMethod (eps = 10^-5): " << endl;
     cout << setprecision(20) <<"I: " << calculateSimpsonIntegral(a,b,eps2,function) << endl;
+
     return 0;
 }
