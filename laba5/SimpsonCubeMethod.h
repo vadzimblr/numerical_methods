@@ -1,0 +1,14 @@
+//
+// Created by vadim on 12.11.2023.
+//
+
+#ifndef NUMERICAL_METHODS_SIMPSONCUBEMETHOD_H
+#define NUMERICAL_METHODS_SIMPSONCUBEMETHOD_H
+
+
+class SimpsonCubeMethod {
+
+};
+
+
+#endif //NUMERICAL_METHODS_SIMPSONCUBEMETHOD_H

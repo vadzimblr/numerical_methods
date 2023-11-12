@@ -4,8 +4,8 @@
 
 #ifndef NUMERICAL_METHODS_TRAPEZOIDALMETHOD_H
 #define NUMERICAL_METHODS_TRAPEZOIDALMETHOD_H
-
-double calculateTrapezoidalIntegral(const double& a, const double& b, const int& N, double function(const double&));
+#include <cmath>
+double calculateTrapezoidalIntegral(const double& a, const double& b, const double& eps, double function(const double&));
 
 
 #endif //NUMERICAL_METHODS_TRAPEZOIDALMETHOD_H

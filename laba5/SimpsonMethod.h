@@ -4,9 +4,9 @@
 
 #ifndef NUMERICAL_METHODS_SIMPSONMETHOD_H
 #define NUMERICAL_METHODS_SIMPSONMETHOD_H
+#include <cmath>
 
-
-double calculateSimpsonIntegral(const double& a, const double& b, const int& N, double function(const double&));
+double calculateSimpsonIntegral(const double& a, const double& b, const double& eps, double function(const double&));
 
 
 #endif //NUMERICAL_METHODS_SIMPSONMETHOD_H
