@@ -29,7 +29,7 @@ double calculateSimpsonIntegral(const double& a, const double& b, const double& 
         oddAmount *= 4;
         I += (evenAmount + oddAmount);
         I *= (h / 3);
-    } while (fabs(I - I2) > eps);
+    } while (fabs(I - I2) > 15*eps);
 
     return I;
 }
