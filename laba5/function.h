@@ -7,6 +7,7 @@
 #include <cmath>
 
 double function(const double& x);
+double function(const double& x, const double& y, const double& a, const double& b);
 
 
 #endif //NUMERICAL_METHODS_FUNCTION_H

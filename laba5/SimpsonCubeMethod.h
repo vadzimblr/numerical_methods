@@ -4,11 +4,12 @@
 
 #ifndef NUMERICAL_METHODS_SIMPSONCUBEMETHOD_H
 #define NUMERICAL_METHODS_SIMPSONCUBEMETHOD_H
-
-
-class SimpsonCubeMethod {
-
-};
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+double calculateSimpsonCubeIntegral(const double& a, const double& b,const double& c, const double& d, const double& aForFucntion, const double& bForFunction,
+                                    double function(const double&, const double&, const double&, const double&));
 
 
 #endif //NUMERICAL_METHODS_SIMPSONCUBEMETHOD_H
