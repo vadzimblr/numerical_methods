@@ -30,7 +30,7 @@ def plot_polynomial(X,Y,A):
     plt.show()
 
 def main():
-    filename = "laba4/Data.txt"  
+    filename = "Data.txt"
     result = read_vectors_from_file(filename)
     if result is None: 
         exit(1)

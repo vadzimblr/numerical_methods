@@ -4,29 +4,29 @@
 
 #include "LeastSquaresApproximation.h"
 vector<double> calculateA(const int& N, const int& m, const vector<int>& X, const vector<int>& Y){
-    vector<double> POWERX(2 * m);
+    vector<double> POWERX(2 * m+1);
 
-    for (int k = 0; k <= 2 * m; k++) {
+    for (int k = 0; k < 2 * m+1; k++) {
         double sum = 0.0;
         for (int i = 0; i < N; i++) {
-            sum += pow(X[i], k + 1);
+            sum += pow(X[i], k);
         }
         POWERX[k] = sum;
     }
 
-    vector<vector<double>> SUMX(m + 1, vector<double>(m + 1));
+    vector<vector<double>> SUMX(m+1, vector<double>(m+1));
 
-    for (int l = 0; l <= m; l++) {
-        for (int j = 0; j <= m; j++) {
+    for (int l = 0; l <m+1; l++) {
+        for (int j = 0; j <m+1; j++) {
             SUMX[l][j] = POWERX[l + j];
         }
     }
     SUMX[0][0] = N;
-    vector<double> PRAW(m + 1);
+    vector<double> PRAW(m+1);
 
-    for (int l = 0; l <= m; l++) {
+    for (int l = 0; l <m+1; l++) {
         for (int i = 0; i < N; i++) {
-            PRAW[l] += (Y[i] * pow(X[i], l + 1));
+            PRAW[l] += (Y[i] * pow(X[i], l));
         }
     }
 
@@ -56,14 +56,13 @@ double calculateS(const int& N, const int& m, const vector<int>& X, const vector
         for(int j = 0; j<m+1;j++){
             yi-= A[j] * pow(X[i],j);
         }
-        sum += yi;
+        sum += yi*yi;
     }
-    S*=(sum*sum);
+    S*=sum;
     S = pow(S,0.5);
     return S;
 }
-
-void printResult(const vector<int>& X, const vector<int>& Y,const vector<double>& A, const double& S){
+void printResult(const vector<int>& X, const vector<int>& Y, const vector<double>& A, const double& S){
     cout << "X: ";
     for(const int& elem: X){
         cout << elem << " ";
@@ -73,9 +72,18 @@ void printResult(const vector<int>& X, const vector<int>& Y,const vector<double>
         cout << elem << " ";
     }
     cout << endl;
-    printAnswer(A);
-    cout << "y = " << A[2] << "x^2 + " << A[1] << "x + " << A[0] << endl;
-    cout << "S: " << S << endl;
+
+    cout << "y = ";
+    for(int j = A.size()-1; j >= 0; --j){
+        cout << A[j];
+        if(j > 0) {
+            cout << "x^" << j;
+            if(A[j - 1] >= 0) cout << " + ";
+            else cout << " ";
+        }
+    }
+
+    cout << endl << "S: " << S << endl;
 }
 
 
